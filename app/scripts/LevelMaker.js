@@ -1,7 +1,7 @@
 function LevelMaker() {
 
     /** ## Private ## **/
-    var LEVEL_MAKER_VERSION = 3;
+    var LEVEL_MAKER_VERSION = 4;
     var LOCAL_STORAGE_KEY = "triangula_history";
 
     /** ## Private methods ## **/
@@ -11,6 +11,9 @@ function LevelMaker() {
             name: 'noname',
             created_at: '',
             triangles: [],
+            spikes: [],
+            doors: [],
+            bombs: [],
             colors: []
         };
     }
@@ -56,7 +59,10 @@ function LevelMaker() {
     /** ## Public methods with private access ## **/
     this.getLevelJson = function () {
         var json = getBase();
-        $(".triangle").each(function() {
+        
+        // Add triangles
+        $(".level > .triangle").each(function() {
+            if($(this).hasClass("door")) return;
             var angle = $(this).data("angle") ? new Number($(this).data("angle")).toFixed(parseInt(2)) : 0;
             var rotation = $(this).css("-webkit-transform");
             $(this).css("-webkit-transform","none");
@@ -68,6 +74,62 @@ function LevelMaker() {
                 size: $(this).width(),
                 angle: angle
             });
+        });
+
+        // Add Spikes
+        $(".spikes").each(function() {
+            var angle = $(this).data("angle") ? new Number($(this).data("angle")).toFixed(parseInt(2)) : 0;
+            var rotation = $(this).css("-webkit-transform");
+            $(this).css("-webkit-transform", "none");
+            var position = $(this).position();
+            $(this).css("-webkit-transform", rotation);
+            
+            var count = $(this).find(".triangle").length;
+            
+            json.spikes.push({
+                x: position.left,
+                y: position.top,
+                size: $(this).width() / count,
+                angle: angle,
+                count: count
+            });
+        });
+        
+        // Add doors
+        $(".door").each(function() {
+            var angle = $(this).data("angle") ? new Number($(this).data("angle")).toFixed(parseInt(2)) : 0;
+            var rotation = $(this).css("-webkit-transform");
+            $(this).css("-webkit-transform", "none");
+            var position = $(this).position();
+            $(this).css("-webkit-transform", rotation);
+
+            var doorid = parseInt($(this).html());
+            
+            var $switch = $("#door-switch-" + doorid);
+            var switchPosition = $switch.position();
+            
+            json.doors.push({
+                door: {
+                    x: position.left,
+                    y: position.top,
+                    angle: angle,
+                    size: $(this).width()
+                },
+                switch: {
+                    x: switchPosition.left,
+                    y: switchPosition.top
+                }
+            })
+        });
+        
+        // Add bombs
+        $(".bomb").each(function() {
+            var position = $(this).position();
+
+            json.bombs.push({
+                x: position.left,
+                y: position.top
+            })
         });
         
         for(var i = 1;i <= 5;++i) {

@@ -47,7 +47,8 @@ body {
 .level-wrapper {
     width: 100%;
     height: 520px;
-    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .level {
@@ -68,6 +69,78 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+#add-spikes span {
+    display: inline-block;
+    -webkit-transform: translateY(-3px);
+}
+
+.spikes {
+    position: absolute;
+    height: 100px;
+    width: 300px;
+    transform-origin: 0 0;
+    border: 1px solid #fefefe;
+}
+
+.spikes .triangle {
+    background: white;
+    animation-duration: 1000ms;
+    animation-delay: 0ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    transform-origin: 0 0;
+}
+
+.spikes .triangle:nth-child(even) {
+    animation-name: spikes-triangle-1;
+}
+
+.spikes .triangle:nth-child(odd) {
+    animation-name: spikes-triangle-2;
+}
+@keyframes spikes-triangle-1 {
+    0% {
+        transform: translate(0px, 0px);
+    }
+    50% {
+        transform: translate(0px, 100px);
+    }
+    100% {
+        transform: translate(0px, 0px);
+    }
+}
+
+@keyframes spikes-triangle-2 {
+    0% {
+        transform: translate(0px, 100px);
+    }
+    50% {
+        transform: translate(0px, 0px);
+    }
+    100% {
+        transform: translate(0px, 100px);
+    }
+}
+
+.door-switch {
+    background: white;
+    width: 10px;
+    height: 10px;
+    color: black;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.door {
+    text-align: center;
+    color: black;
+    background: white;
+    
 }
 
 .rotatable-handle.ui-draggable-dragging {
@@ -99,6 +172,68 @@ body {
     height: 30px;
 }
 
+.player {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 10px;
+    position: absolute;
+    top: 245px;
+    left: 50px;
+}
+
+#add-bomb {
+    color: red;
+}
+
+.bomb {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: red;
+    border-radius: 10px;
+}
+
+.bomb:after {
+    display: block;
+    content: " ";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255,0,0,0.2);
+
+    animation-duration: 1000ms;
+    animation-delay: 0ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    transform-origin: 0 0;
+    animation-name: bomb;
+    border-radius: 20px;
+}
+
+@keyframes bomb {
+    0% {
+        width: 10px;
+        height: 10px;
+        top: 0;
+        left: 0;
+    }
+    50% {
+        width: 21px;
+        height: 21px;
+        left: -6px;
+        top: -6px;
+    }
+    100% {
+        width: 10px;
+        height: 10px;
+        top: 0;
+        left: 0;
+    }
+}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

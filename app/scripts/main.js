@@ -86,3 +86,60 @@ $("body").on("click",".load-level-btn",function() {
 $("#widen-level").click(function() {
     $(".level").css("width","+=500");
 });
+
+$("#create-spikes-form").submit(function(e) {
+    e.preventDefault();
+    var triangle = "<div class='triangle'></div>";
+    var amount = parseInt($("#spikes-count").val());
+    var $spikes = $("<div class='spikes'></div>");
+    $spikes.css("width",amount*100);
+    
+    var i = amount;
+    while(i--) {
+        var $triangle = $(triangle);
+        $triangle.css('left',i*100);
+        $spikes.append($triangle);
+    }
+    
+    $(".level").append($spikes);
+    $spikes.draggable().resizable({
+        aspectRatio: amount,
+        grid: [ amount, 1 ]
+    }).rotatable();
+    
+    $spikes.resize(function() {
+        var $triangles = $(this).find(".triangle");
+        var triangle_size = $(this).width() / $triangles.length;
+        $triangles.css({
+            'width': triangle_size,
+            'height': triangle_size
+        });
+        var i = $triangles.length;
+        $triangles.each(function() {
+            --i;
+            $(this).css('left',i*triangle_size);
+        });
+    });
+    
+    $("#create-spikes-modal").modal("hide");
+});
+
+var doorCount = 0;
+
+$("#add-door").click(function() {
+    var $switch = $("<div class='door-switch' id='door-switch-" + doorCount + "'>" + doorCount + "</div>");
+    var $door = $("<div class='triangle door' id='door-" + doorCount + "'>" + doorCount + "</div>");
+    $switch.draggable();
+    $door.draggable().resizable({
+        aspectRatio: 1
+    }).rotatable();
+    $(".level").append($switch);
+    $(".level").append($door);
+    doorCount++;
+});
+
+$("#add-bomb").click(function() {
+    var $bomb = $("<div class='bomb'></div>");
+    $bomb.draggable();
+    $(".level").append($bomb);
+});
