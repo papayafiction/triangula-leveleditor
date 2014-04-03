@@ -45,11 +45,9 @@ loadHistory();
 
 $("#add-triangle").click(function() {
     var $triangle = $("<div class='triangle'></div>");
-    $triangle.draggable({ containment: "parent" }).resizable({
+    $triangle.draggable().resizable({
         aspectRatio: 1
-    }).rotatable({
-        autoHide: false
-    });
+    }).rotatable();
     $triangle.css("background-color",getTriangleColor());
     $triangle.appendTo($(".level"));
 });
@@ -142,4 +140,47 @@ $("#add-bomb").click(function() {
     var $bomb = $("<div class='bomb'></div>");
     $bomb.draggable();
     $(".level").append($bomb);
+});
+
+$("#add-exit").click(function() {
+    var $exit = $("<div class='exit'></div>");
+    $exit.draggable();
+    $(".level").append($exit);
+});
+
+$(document).mousemove(function (e) {
+    window.x = e.pageX;
+    window.y = e.pageY;
+});
+
+$("body").keypress(function (e) {
+    console.log(e.which);
+    var basePosition = $(".level").position();
+    console.log(window.x);
+    console.log(window.y);
+    var posX = window.x - basePosition.left;
+    var posY = window.y - basePosition.top;
+    switch (e.which) {
+        case 116: // t for Triangle
+            var $triangle = $("<div class='triangle'></div>");
+            $triangle.draggable().resizable({
+                aspectRatio: 1
+            }).rotatable();
+            $triangle.css("background-color", getTriangleColor());
+            $triangle.css({
+                left: posX,
+                top: posY
+            });
+            $triangle.appendTo($(".level"));
+            break;
+        case 98: // b for Bomb
+            var $bomb = $("<div class='bomb'></div>");
+            $bomb.draggable();
+            $bomb.css({
+                left: posX,
+                top: posY
+            });
+            $(".level").append($bomb);
+            break;
+    }
 });

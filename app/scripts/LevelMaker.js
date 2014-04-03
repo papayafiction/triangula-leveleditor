@@ -14,6 +14,7 @@ function LevelMaker() {
             spikes: [],
             doors: [],
             bombs: [],
+            exits: [],
             colors: []
         };
     }
@@ -127,6 +128,16 @@ function LevelMaker() {
             var position = $(this).position();
 
             json.bombs.push({
+                x: position.left,
+                y: position.top
+            })
+        });
+
+        // Add exits
+        $(".exit").each(function () {
+            var position = $(this).position();
+
+            json.exits.push({
                 x: position.left,
                 y: position.top
             })
