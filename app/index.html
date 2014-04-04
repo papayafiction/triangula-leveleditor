@@ -30,7 +30,8 @@
             <div class="header">
                 <h3 class="text-muted">Triangula Leveleditor</h3>
             </div>
-            
+            <p>Woot? What is this? Help! Ah, here is <a href="/help.html" target="_blank">help</a>.</p>
+            <p>Sorry, but you need to use <strong>Chrome</strong> to build levels. We use some pretty new stuff here and Firefox / IE doesn't support that.</p>
             
             <div style="margin-bottom: 20px">
                 <div class="btn-group">
@@ -42,7 +43,7 @@
                 </div>
                 <div class="btn-group">
                     <button type="button" id="save-btn" class="btn btn-success">Save</button>
-                    <button type="button" id="load-string-btn" class="btn btn-info">Load String</button>
+                    <!--<button type="button" id="load-string-btn" class="btn btn-info">Load String</button>-->
                     <button type="button" id="delete-history" class="btn btn-danger">Delete History</button>
                 </div>
                 <div class="btn-group">
@@ -51,6 +52,9 @@
                 <form class="form-inline" style="display: inline-block;margin-left: 20px" role="form">
                     <div class="form-group">
                         <input type="text" id="level-name" class="form-control" placeholder="Level Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="creator-name" class="form-control" placeholder="Your creator tag">
                     </div>
                 </form>
             </div>
@@ -89,6 +93,11 @@
                     <div class="color-info" id="color-info5"></div>
                 </div>
             </form>
+            
+            <p>
+                If you have the beta app you can try some of these levels: movethetime, level4<br>
+                If not, tweet us <a href="https://twitter.com/PapayaFiction" target="_blank">@PapayaFiction</a> to get the beta app.
+            </p>
 
             <table class="table" id="history-table">
                 <thead>
@@ -105,7 +114,7 @@
             </table>
             
             <div class="footer">
-                <p><span class="glyphicon glyphicon-heart"></span> from Papaya Fiction</p>
+                <p>❤ from Papaya Fiction</p>
             </div>
             
         </div>

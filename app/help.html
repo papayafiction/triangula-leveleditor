@@ -1,0 +1,110 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>triangula leveleditor</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css">
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+    </head>
+    <body>
+        <!--[if lt IE 10]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+
+        <div class="container">
+            <div class="header">
+                <h3 class="text-muted">Triangula Leveleditor Help</h3>
+            </div>
+            
+            <h2>Steps to a successfull Triangula level:</h2>
+            
+            <h3>Preface</h3>
+            <p>1. The player always starts at the left side of the level. The position is indicated by the small white dot.</p>
+            <p>2. By tapping and holding the player can move back in time. Use this features to make your level awesome as hell!</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Step 1: Triangles</h3>
+                    <p>Almost everything in Triangula is made out of triangles. Use the left button to add a triangle to the level: <button type="button" class="btn btn-default">▲</button></p>
+                    <blockquote>
+                        <p>You can also press <kbd>t</kbd> which inserts a triangle at your current cursor position</p>
+                        <footer>Pro tip</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-6">
+                    <h3>Step 2: <span style="color: #00748E">C</span><span style="color: #E3DFBB">o</span><span style="color: #F4BA4D">l</span><span style="color: #E3753C">o</span><span style="color: #DA3B3A">r</span><span style="color: #C3943D">s</span></h3>
+
+                    <p>Define your level colors below the level area. The first and fith color define the colors of the triangles. The other three are used to generate the background. Find some really great color palettes here: <a href="https://kuler.adobe.com" target="_blank">Adobe Kuler</a></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Step 3: Level Elements</h3>
+
+                    <p>These Elements make Triangula so much <span data-toggle="tooltip" class="has-tooltip" data-placement="top" title="No. No fun. Pure anger.">fun</span>:</p>
+                    <ul>
+                        <li>Spikes: Some triangles which always move up and down</li>
+                        <li>Doors: A switch and a triangle (door). When the player touches the switch, the triangle moves up</li>
+                        <li>Bombs: Touch 'em and you loose.</li>
+                        <li>Exits: The player must reach any exit to successfully end the level.</li>
+                    </ul>
+                    <blockquote>
+                        <p>You can also press <kbd>b</kbd> which inserts a bomb at your current cursor position</p>
+                        <footer>Pro tip</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-6">
+                    <h3>Step 4: Give your beauty a name</h3>
+
+                    <p>You have to give your level a name. After you click save it appears in your level history.</p>
+                    <p>If you have a creator tag, you can enter it in the right input field. You can then instantly play the level on your phone / tablet. The level name is always [creator-tag]-[level-name]. For example: your creator tag is "yay" and your level is called "superawesomeness". You then need to enter "yay-superawesomeness" in the level input field in the game.</p>
+                </div>
+            </div>
+            
+            <h1>Level strings? Feedback?</h1>
+            <p>Tweet us <a href="https://twitter.com/PapayaFiction" target="_blank">@PapayaFiction</a></p>
+            
+            
+            <div class="footer">
+                <p>❤ from Papaya Fiction</p>
+            </div>
+            
+        </div>
+
+        <!-- build:js scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/jquery-ui/ui/jquery-ui.custom.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+
+
+        <!-- build:js scripts/plugins.js -->
+        <!-- endbuild -->
+
+        <!-- build:js({app,.tmp}) scripts/main.js -->
+        <!-- endbuild -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.has-tooltip').tooltip();
+            });
+        </script>
+</body>
+</html>

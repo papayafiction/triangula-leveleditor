@@ -25,8 +25,14 @@ function getTriangleColor() {
     }
     var t = tinycolor(base);
     var hsl = t.toHsl();
+    
     hsl.s += Math.random()* 0.1-0.05;
+    if(hsl.s < 0) hsl.s = 0;
+    if(hsl.s > 1) hsl.s = 1;
     hsl.l += Math.random()* 0.1-0.05;
+    if (hsl.l < 0) hsl.l = 0;
+    if (hsl.l > 1) hsl.l = 1;
+    
     return tinycolor(hsl).toHexString();
 }
 
@@ -64,6 +70,20 @@ $("#get-string-btn").click(function() {
 $("#save-btn").click(function () {
     levelMaker.saveLevel();
     $("#history-table").find("tbody").append(levelMaker.getHistoryEntryHtml(levelMaker.getLevelJson()));
+    var user = $("#creator-name").val();
+    if(user.length > 0) {
+        var password = prompt("Enter your password");
+        var level_data = levelMaker.getLevelString();
+        var level_name = $("#level-name").val();
+        
+        $.post("save.php", 
+        {
+            user: user,
+            password: password,
+            level_name: level_name,
+            level_data: level_data 
+        });
+    }
 });
 
 $("#delete-history").click(function() {
@@ -154,12 +174,13 @@ $(document).mousemove(function (e) {
 });
 
 $("body").keypress(function (e) {
-    console.log(e.which);
     var basePosition = $(".level").position();
-    console.log(window.x);
-    console.log(window.y);
+    
     var posX = window.x - basePosition.left;
     var posY = window.y - basePosition.top;
+    if(posX < 0 || posY < 0) {
+        return;
+    }
     switch (e.which) {
         case 116: // t for Triangle
             var $triangle = $("<div class='triangle'></div>");

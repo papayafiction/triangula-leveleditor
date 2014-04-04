@@ -196,7 +196,7 @@ function LevelMaker() {
     };
     
     this.getHistoryEntryHtml = function(value) {
-        return "<tr><td>" + value.name + "</td><td>" + value.created_at + "</td><td><input type='text' class='form-control level-string-input' readonly value='" + JSON.stringify(value) + "'></td><td><button type='button' class='btn load-level-btn'>Load</button></td></tr>";
+        return "<tr><td>" + value.name + "</td><td>" + value.created_at + "</td><td><input type='text' class='form-control level-string-input' readonly value='" + JSON.stringify(value) + "'></td><td><!--<button type='button' class='btn load-level-btn'>Load</button>--></td></tr>";
     }
 }
 
