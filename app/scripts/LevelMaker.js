@@ -264,6 +264,8 @@ function LevelMaker() {
 
         $("#level-name").val(level.name);
         
+        $(".level").append('<div class="player"></div>');
+        
         window.setTimeout(function() {
             setColors();
             updateColorInformation();    
