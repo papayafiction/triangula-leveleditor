@@ -233,9 +233,9 @@ kbd {
 .exit {
     position: absolute !important;
     display: block;
-    width: 40px;
+    width: 20px;
     background: black;
-    height: 80px;
+    height: 40px;
     left: 0;
     top: 0;
 }
