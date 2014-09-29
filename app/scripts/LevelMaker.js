@@ -161,26 +161,113 @@ function LevelMaker() {
     this.loadLevelString = function (string) {
         $(".level").html("");
         var level = JSON.parse(string);
-        $.each(level.triangles,function(key,triangle) {
-            var $triangle = $("<div class='triangle'></div>");
-            $triangle.draggable({ containment: "parent" }).resizable({
-                aspectRatio: 1
-            }).rotatable({
-                autoHide: false
-            });
-            $triangle.css({top:triangle.y,left:triangle.x,width:triangle.size,height:triangle.size})
-            .appendTo($(".level"));
-        });
         
+        if(level.triangles) {
+            $.each(level.triangles,function(key,triangle) {
+                var $triangle = $("<div class='triangle'></div>");
+                $triangle.draggable({ containment: "parent" }).resizable({
+                    aspectRatio: 1
+                }).rotatable({
+                    autoHide: false
+                });
+                $triangle.css({width:triangle.size,height:triangle.size, top: triangle.y, left: triangle.x});
+                $triangle.appendTo($(".level"));
+                window.setTimeout(function() {
+                    $triangle.css({"-webkit-transform": "rotate(" + (triangle.angle*-1) + "deg)"});
+                },10);
+            });
+        }
+
+        if(level.doors) {
+            var doorCount = 0;
+            $.each(level.doors,function(key,door) {
+                var $switch = $("<div class='door-switch' id='door-switch-" + doorCount + "'>" + doorCount + "</div>");
+                var $door = $("<div class='triangle door' id='door-" + doorCount + "'>" + doorCount + "</div>");
+                $switch.draggable();
+                $door.draggable().resizable({
+                    aspectRatio: 1
+                }).rotatable();
+                $switch.css({top:door.switch.y,left:door.switch.x});
+                $door.css({top:door.door.y,left:door.door.x,width: door.door.size, height: door.door.size});
+                $(".level").append($switch);
+                $(".level").append($door);
+                window.setTimeout(function () {
+                    $door.css({"-webkit-transform": "rotate(" + (door.door.angle * -1) + "deg)"});
+                }, 10);
+                ++doorCount;
+            });
+        }
+        
+        if(level.bombs) {
+            $.each(level.bombs,function(key,bomb) {
+                var $bomb = $("<div class='bomb'></div>");
+                $bomb.draggable();
+                $bomb.css({top: bomb.y, left: bomb.x});
+                $(".level").append($bomb);
+            });
+        }
+
+        if(level.exits) {
+            $.each(level.exits, function (key, exit) {
+                var $exit = $("<div class='exit'></div>");
+                $exit.draggable();
+                $exit.css({top: exit.y, left: exit.x});
+                $(".level").append($exit);
+            });
+        }
+        
+        if(level.spikes) {
+            $.each(level.spikes,function(key,spike) {
+                var triangle = "<div class='triangle'></div>";
+                var amount = spike.count;
+                var $spikes = $("<div class='spikes'></div>");
+                $spikes.css("width", amount * 100);
+
+                var i = amount;
+                while (i--) {
+                    var $triangle = $(triangle);
+                    $triangle.css('left', i * 100);
+                    $spikes.append($triangle);
+                }
+
+                $spikes.css({height: spike.size, top: spike.y, left: spike.x});
+                $(".level").append($spikes);
+                window.setTimeout(function () {
+                    $spikes.css({"-webkit-transform": "rotate(" + (spike.angle * -1) + "deg)"});
+                }, 10);
+                
+                
+                $spikes.draggable().resizable({
+                    aspectRatio: amount,
+                    grid: [amount, 1]
+                }).rotatable();
+
+                $spikes.resize(function () {
+                    var $triangles = $(this).find(".triangle");
+                    var triangle_size = $(this).width() / $triangles.length;
+                    $triangles.css({
+                        'width': triangle_size,
+                        'height': triangle_size
+                    });
+                    var i = $triangles.length;
+                    $triangles.each(function () {
+                        --i;
+                        $(this).css('left', i * triangle_size);
+                    });
+                });
+            });
+        }
+
         for(var i = 1;i<=5;++i) {
             $("#color" + i).val(level.colors[i-1]);
         }
 
         $("#level-name").val(level.name);
         
-        setColors();
-        updateColorInformation();
-        
+        window.setTimeout(function() {
+            setColors();
+            updateColorInformation();    
+        },100);
     };
     
     this.saveLevel = function() {
@@ -196,7 +283,7 @@ function LevelMaker() {
     };
     
     this.getHistoryEntryHtml = function(value) {
-        return "<tr><td>" + value.name + "</td><td>" + value.created_at + "</td><td><input type='text' class='form-control level-string-input' readonly value='" + JSON.stringify(value) + "'></td><td><!--<button type='button' class='btn load-level-btn'>Load</button>--></td></tr>";
+        return "<tr><td>" + value.name + "</td><td>" + value.created_at + "</td><td><input type='text' class='form-control level-string-input' readonly value='" + JSON.stringify(value) + "'></td><td><button type='button' class='btn load-level-btn'>Load</button></td></tr>";
     }
 }
 

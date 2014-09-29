@@ -7,3 +7,4 @@ test/bower_components
 app/.idea
 .DS_Store
 app/save.php
+.idea
