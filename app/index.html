@@ -49,14 +49,7 @@
                 <div class="btn-group">
                     <button type="button" id="widen-level" class="btn btn-info">Widen</button>
                 </div>
-                <form class="form-inline" style="display: inline-block;margin-left: 20px" role="form">
-                    <div class="form-group">
-                        <input type="text" id="level-name" class="form-control" placeholder="Level Name">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="creator-name" class="form-control" placeholder="Your creator tag">
-                    </div>
-                </form>
+
             </div>
             
             <div class="level-wrapper">
@@ -145,6 +138,37 @@
         <!-- /.modal -->
 
 
+        <!-- save: enter password modal -->
+        <div class="modal fade" id="save-modal" tabindex='-1'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Save level</h4>
+                    </div>
+                    <form id="save-form">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="save-form">Level name:</label>
+                                <input type="text" id="level-name" class="form-control" placeholder="Level name" /> <br/>
+                                <label for="save-form">Creator tag:</label>
+                                <input type="text" class="form-control" id="creator-tag" placeholder="Creator tag"/> <br/>
+                                <label for="save-form">Password:</label>
+                                <input type="password" class="form-control" id="password" placeholder="Password"/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Save">
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -163,5 +187,7 @@
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
+
+
 </body>
 </html>
