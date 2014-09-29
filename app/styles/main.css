@@ -65,7 +65,7 @@ kbd {
 }
 
 .level {
-    background-image: url("/images/level-background.png");
+    background-image: url("../images/level-background.png");
     background-repeat: repeat-x;
     width: 2000px;
     height: 500px;
@@ -77,8 +77,8 @@ kbd {
     width: 100px;
     height: 100px;
     /*background-image: url('/images/triangle.svg');*/
-    -webkit-mask: url('/images/triangle.svg') top left / cover;
-    -moz-mask: url('/images/triangle.svg') top left / cover;
+    -webkit-mask: url('../images/triangle.svg') top left / cover;
+    -moz-mask: url('../images/triangle.svg') top left / cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

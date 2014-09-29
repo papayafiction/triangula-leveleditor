@@ -67,23 +67,51 @@ $("#get-string-btn").click(function() {
     console.log(levelMaker.getLevelJson());
 });
 
-$("#save-btn").click(function () {
-    levelMaker.saveLevel();
-    $("#history-table").find("tbody").append(levelMaker.getHistoryEntryHtml(levelMaker.getLevelJson()));
-    var user = $("#creator-name").val();
-    if(user.length > 0) {
-        var password = prompt("Enter your password");
-        var level_data = levelMaker.getLevelString();
-        var level_name = $("#level-name").val();
-        
-        $.post("save.php", 
-        {
+$("#save-btn").click(function (e) {
+    $('#save-modal').modal('show');
+});
+
+$("#save-form").submit(function(e) {
+
+    e.preventDefault();
+
+    var user = $("#creator-tag").val();
+    var password = $("#password").val();
+    var level_data = levelMaker.getLevelString();
+    var level_name = $("#level-name").val();
+
+    if(user!="" && password!="" && level_name!="") {
+
+        levelMaker.saveLevel();
+
+        console.log("YAAAY1");
+        $('#save-modal').modal('hide');
+
+        console.log("YAAAY2");
+        console.log(levelMaker.getLevelJson());
+        $("#history-table").find("tbody").append(levelMaker.getHistoryEntryHtml(levelMaker.getLevelJson()));
+
+
+        $.post("save.php", {
             user: user,
             password: password,
             level_name: level_name,
-            level_data: level_data 
+            level_data: level_data
+
+        }).done(function(result) {
+
+            if(result=='0') {
+                alert('wrong username/password!')
+            } else {
+
+            }
+
         });
+    } else {
+        alert("Please fill all fields!");
     }
+
+
 });
 
 $("#delete-history").click(function() {
