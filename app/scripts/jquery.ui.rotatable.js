@@ -95,7 +95,7 @@
 
                     angle = _this.radToDeg(_this.getAngle(mouse_coords, center_coords)) - 90;
 
-                    return _this.rotate(angle);
+                    return _this.rotate(angle, e);
                 },
                 stop: function () {
                     _this.rotating = false;
@@ -128,7 +128,44 @@
         };
 
         // Rotate Element to the Given Degree
-        this.rotate = function (degree) {
+        this.rotate = function (degree, e) {
+
+
+
+
+
+        /*
+        snap to right angle (every 45°) (this code snippet is extended by PapayaFiction)
+        prevent snapping by pressing metaKey (apple: cmd, other OS: ctrl)
+        */
+
+        if (!e.metaKey) {
+
+            //all 90° angles
+            if (degree < 10 && degree > -10) {
+                degree = 0;
+            } else if (degree < 100 && degree > 80) {
+                degree = 90;
+            } else if (degree < 190 && degree > 170) {
+                degree = 180;
+            } else if (degree < -80 || degree > 260) {
+                degree = -90
+            }
+
+            //all 45° angles in between
+            else if (degree < -35 && degree > -55) {
+                degree = -45;
+            } else if (degree < 235 && degree > 215) {
+                degree = 225;
+            } else if (degree < 145 && degree > 125) {
+                degree = 135;
+            } else if (degree < 55 && degree > 35) {
+                degree = 45;
+            }
+        }
+
+
+
             _this.data("angle",degree);
             var cos = Math.cos(_this.degToRad(-degree)),
                     sin = Math.sin(_this.degToRad(-degree)),
