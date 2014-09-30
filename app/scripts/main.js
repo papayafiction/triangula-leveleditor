@@ -202,7 +202,28 @@ $(document).mousemove(function (e) {
     window.y = e.pageY;
 });
 
+
+//check whether shift key is pressed (snap-control)
+$("body").keydown(function (e) {
+    if(e.keyCode==16) {
+        $(".triangle").each(function() {
+            $(this).draggable({ snap: false });
+        });
+    }
+});
+
+$("body").keyup(function (e) {
+    if(e.keyCode==16) {
+        $(".triangle").each(function() {
+            $(this).draggable({ snap: true });
+        });
+    }
+});
+
+
+//add items on key press
 $("body").keypress(function (e) {
+
     var basePosition = $(".level").position();
     
     var posX = window.x - basePosition.left;
@@ -210,6 +231,7 @@ $("body").keypress(function (e) {
     if(posX < 0 || posY < 0) {
         return;
     }
+
     switch (e.which) {
         case 116: // t for Triangle
             var $triangle = $("<div class='triangle'></div>");
@@ -232,5 +254,6 @@ $("body").keypress(function (e) {
             });
             $(".level").append($bomb);
             break;
+
     }
 });

@@ -190,7 +190,6 @@
 
         // Update CSS Transform Matrix (transform: matrix)
         this.updateRotationMatrix = function (degree) {
-            console.log('rotate(' + degree + 'deg)');
             degree *= -1;
             _this.css({
                 '-webkit-transform': 'rotate(' + degree + 'deg)'
