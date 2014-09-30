@@ -41,7 +41,7 @@ function loadHistory() {
     $.each(levelMaker.getHistory(),function(key,value) {
         html += levelMaker.getHistoryEntryHtml(value);
     });
-    $("#history-table").find("tbody").html(html);
+    $("#table-body").html(html);
 }
 
 var levelMaker = new LevelMaker();
@@ -84,12 +84,8 @@ $("#save-form").submit(function(e) {
 
         levelMaker.saveLevel();
 
-        console.log("YAAAY1");
         $('#save-modal').modal('hide');
-
-        console.log("YAAAY2");
-        console.log(levelMaker.getLevelJson());
-        $("#history-table").find("tbody").append(levelMaker.getHistoryEntryHtml(levelMaker.getLevelJson()));
+        $("#table-body").append(levelMaker.getHistoryEntryHtml(levelMaker.getLevelJson()));
 
 
         $.post("save.php", {
@@ -103,7 +99,7 @@ $("#save-form").submit(function(e) {
             if(result=='0') {
                 alert('wrong username/password!')
             } else {
-
+                alert('saved on server!')
             }
 
         });

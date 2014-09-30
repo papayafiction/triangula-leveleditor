@@ -282,6 +282,7 @@ function LevelMaker() {
     
     this.deleteHistory = function() {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([]));
+        $("#table-body").empty();
     };
     
     this.getHistoryEntryHtml = function(value) {
