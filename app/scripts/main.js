@@ -129,6 +129,11 @@ $("#widen-level").click(function() {
     $(".level").css("width","+=500");
 });
 
+$("#shorten-level").click(function() {
+    $(".level").css("width","-=500");
+});
+
+
 $("#create-spikes-form").submit(function(e) {
     e.preventDefault();
     var triangle = "<div class='triangle'></div>";
