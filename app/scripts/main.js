@@ -274,6 +274,9 @@ $("body").keydown(function (e) {
         $(".triangle").each(function() {
             $(this).draggable({ snap: false });
         });
+
+    } else if(e.keyCode == 27) {
+        exitRemoveMode();
     }
 });
 
