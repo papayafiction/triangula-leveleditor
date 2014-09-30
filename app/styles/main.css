@@ -11,6 +11,26 @@ body {
     padding-bottom: 20px;
 }
 
+
+#remove-item:focus {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+#remove-item:active {
+    color: #333;
+    background-color: #ebebeb;
+    border-color: #adadad;
+}
+
+#remove-item.active {
+    color: #333;
+    background-color: #ebebeb;
+    border-color: #adadad;
+}
+
+
 kbd {
     padding: 2px 4px;
     font-size: 90%;
