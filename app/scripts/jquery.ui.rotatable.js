@@ -136,10 +136,10 @@
 
         /*
         snap to right angle (every 45°) (this code snippet is extended by PapayaFiction)
-        prevent snapping by pressing metaKey (apple: cmd, other OS: ctrl)
+        prevent snapping by pressing shiftKey!
         */
 
-        if (!e.metaKey) {
+        if (!e.shiftKey) {
 
             //all 90° angles
             if (degree < 10 && degree > -10) {
