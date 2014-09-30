@@ -51,7 +51,7 @@ loadHistory();
 
 $("#add-triangle").click(function() {
     var $triangle = $("<div class='triangle'></div>");
-    $triangle.draggable().resizable({
+    $triangle.draggable({snap: ".triangle"}).resizable({
         aspectRatio: 1
     }).rotatable();
     $triangle.css("background-color",getTriangleColor());
