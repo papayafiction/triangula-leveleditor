@@ -57,6 +57,10 @@ setColors();
 updateColorInformation();
 loadHistory();
 
+$(".level").click(function() {
+   exitRemoveMode();
+});
+
 $("#add-triangle").click(function() {
     exitRemoveMode();
     var $triangle = $("<div class='triangle'></div>");
@@ -285,6 +289,8 @@ $("body").keyup(function (e) {
 //add items on key press
 $("body").keypress(function (e) {
 
+
+
     var basePosition = $(".level").position();
     
     var posX = window.x - basePosition.left;
@@ -295,6 +301,7 @@ $("body").keypress(function (e) {
 
     switch (e.which) {
         case 116: // t for Triangle
+            exitRemoveMode();
             var $triangle = $("<div class='triangle'></div>");
             $triangle.draggable().resizable({
                 aspectRatio: 1
@@ -305,8 +312,16 @@ $("body").keypress(function (e) {
                 top: posY
             });
             $triangle.appendTo($(".level"));
+
+            $triangle.click(function() {
+                removeItem($triangle);
+            });
+
+
             break;
         case 98: // b for Bomb
+            exitRemoveMode();
+
             var $bomb = $("<div class='bomb'></div>");
             $bomb.draggable();
             $bomb.css({
@@ -314,8 +329,15 @@ $("body").keypress(function (e) {
                 top: posY
             });
             $(".level").append($bomb);
+
+            $bomb.click(function() {
+                removeItem($bomb);
+            });
+
             break;
 
+        case 100:
+            enterRemoveMode();
     }
 
 
