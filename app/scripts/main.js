@@ -58,7 +58,7 @@ updateColorInformation();
 loadHistory();
 
 $("#add-triangle").click(function() {
-    $("#remove-item").removeClass("active");
+    exitRemoveMode();
     var $triangle = $("<div class='triangle'></div>");
     $triangle.draggable({snap: ".triangle"}).resizable({
         aspectRatio: 1
@@ -67,22 +67,9 @@ $("#add-triangle").click(function() {
     $triangle.css("background-color",getTriangleColor());
     $triangle.appendTo($(".level"));
 
-
     $triangle.click(function() {
-
-        if(Triangula.removeMode) {
-            $(".level").find($triangle).remove();
-            Triangula.removeMode=false;
-            $("#remove-item").toggleClass("active");
-
-            $(".triangle").each(function() {
-                $(this).draggable({disabled:false});
-            });
-
-        }
+        removeItem($triangle);
     });
-
-
 
 });
 
@@ -164,7 +151,8 @@ $("#shorten-level").click(function() {
 });
 
 $("#add-spikes").click(function() {
-    $("#remove-item").removeClass("active");
+    exitRemoveMode();
+
 });
 
 $("#create-spikes-form").submit(function(e) {
@@ -202,12 +190,17 @@ $("#create-spikes-form").submit(function(e) {
     });
     
     $("#create-spikes-modal").modal("hide");
+
+    $spikes.click(function() {
+        removeItem($spikes);
+    });
+
 });
 
 var doorCount = 0;
 
 $("#add-door").click(function() {
-    $("#remove-item").removeClass("active");
+    exitRemoveMode();
     var $switch = $("<div class='door-switch' id='door-switch-" + doorCount + "'>" + doorCount + "</div>");
     var $door = $("<div class='triangle door' id='door-" + doorCount + "'>" + doorCount + "</div>");
     $switch.draggable();
@@ -217,32 +210,51 @@ $("#add-door").click(function() {
     $(".level").append($switch);
     $(".level").append($door);
     doorCount++;
+
+    $door.click(function() {
+        removeItem($door);
+        Triangula.removeMode=true;
+        removeItem($switch);
+    });
+    $switch.click(function() {
+        removeItem($door);
+        Triangula.removeMode=true;
+        removeItem($switch);
+    });
+
 });
 
 $("#add-bomb").click(function() {
-    $("#remove-item").removeClass("active");
+    exitRemoveMode();
     var $bomb = $("<div class='bomb'></div>");
     $bomb.draggable();
     $(".level").append($bomb);
-});
 
-$("#add-exit").click(function() {
-    $("#remove-item").removeClass("active");
-    var $exit = $("<div class='exit'></div>");
-    $exit.draggable();
-    $(".level").append($exit);
-});
-
-$("#remove-item").click(function() {
-    Triangula.removeMode = true;
-    $("#remove-item").toggleClass("active");
-
-    $(".triangle").each(function() {
-        $(this).draggable({disabled:true});
+    $bomb.click(function() {
+        removeItem($bomb);
     });
 
 
 });
+
+$("#add-exit").click(function() {
+    exitRemoveMode();
+    var $exit = $("<div class='exit'></div>");
+    $exit.draggable();
+    $(".level").append($exit);
+
+
+    $exit.click(function() {
+        removeItem($exit);
+    });
+
+});
+
+$("#remove-item").click(function() {
+    enterRemoveMode();
+});
+
+
 
 
 
@@ -305,4 +317,84 @@ $("body").keypress(function (e) {
             break;
 
     }
+
+
 });
+
+
+function enterRemoveMode() {
+
+    Triangula.removeMode = true;
+
+    $("#remove-item").addClass("active");
+
+
+    $(".triangle").each(function() {
+        $(this).draggable({disabled:true});
+    });
+
+    $(".door-switch").each(function() {
+        $(this).draggable({disabled:true});
+    });
+
+    $(".door").each(function() {
+        $(this).draggable({disabled:true});
+    });
+
+    $(".spikes").each(function() {
+        $(this).draggable({disabled:true});
+    });
+
+    $(".bomb").each(function() {
+        $(this).draggable({disabled:true});
+    });
+
+    $(".exit").each(function() {
+        $(this).draggable({disabled:true});
+    });
+
+}
+
+function exitRemoveMode() {
+
+    Triangula.removeMode = false;
+
+    $("#remove-item").removeClass("active");
+
+
+    $(".triangle").each(function() {
+        $(this).draggable({disabled:false});
+    });
+
+    $(".door-switch").each(function() {
+        $(this).draggable({disabled:false});
+    });
+
+    $(".door").each(function() {
+        $(this).draggable({disabled:false});
+    });
+
+    $(".spikes").each(function() {
+        $(this).draggable({disabled:false});
+    });
+
+    $(".bomb").each(function() {
+        $(this).draggable({disabled:false});
+    });
+
+    $(".exit").each(function() {
+        $(this).draggable({disabled:false});
+    });
+
+}
+
+
+
+function removeItem(item) {
+
+    if(Triangula.removeMode) {
+        $(".level").find(item).remove();
+        exitRemoveMode();
+    }
+
+}
