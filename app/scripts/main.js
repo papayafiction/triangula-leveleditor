@@ -259,6 +259,17 @@ $("#remove-item").click(function() {
 });
 
 
+$("#load-json").click(function() {
+    levelMaker.loadLevelString($("#load-json-input").val(), true);
+});
+
+$("#load-name").click(function() {
+    levelMaker.loadLevelByName($("#load-name-input").val());
+});
+
+
+
+
 
 
 

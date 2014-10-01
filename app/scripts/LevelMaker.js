@@ -158,10 +158,58 @@ function LevelMaker() {
         return JSON.stringify(this.getLevelJson());
     };
 
-    this.loadLevelString = function (string) {
+    this.loadLevelByName = function(tag) {
+
+        $.ajax({url:"levels/" + tag + ".txt",
+            success:function(result){
+                $("#load-name-input").css({borderColor:"green", color: "green"});
+                $("#load-name-input").attr("placeholder", "load by name");
+                $("#load-json-input").css({borderColor:"", color: ""});
+                $("#load-json-input").val("");
+                $("#load-json-input").attr("placeholder", "load by JSON");
+
+                levelMaker.loadLevelString(result, false);
+            },
+            error:function(result){
+                $(".level").html("");
+
+                $("#load-name-input").css({borderColor:"#a94442", color: ""});
+                $("#load-name-input").val("");
+                $("#load-name-input").attr("placeholder", "tag not found");
+                $("#load-json-input").css({borderColor:"", color: ""});
+                $("#load-json-input").val("");
+                $("#load-json-input").attr("placeholder", "load by JSON");
+
+            }
+        });
+
+    };
+
+    this.loadLevelString = function (lvl, directInput) {
         $(".level").html("");
-        var level = JSON.parse(string);
-        
+
+        try {
+            var level = JSON.parse(lvl);
+        } catch (e) {
+            if(directInput) {
+                $("#load-name-input").css({borderColor:"", color: ""});
+                $("#load-name-input").val("");
+                $("#load-name-input").attr("placeholder", "load by name");
+                $("#load-json-input").css({borderColor:"#a94442", color: ""});
+                $("#load-json-input").attr("placeholder", "JSON not valid");
+                $("#load-json-input").val("");
+
+            } else {
+                $("#load-name-input").css({borderColor:"#a94442", color: ""});
+                $("#load-name-input").val("");
+                $("#load-name-input").attr("placeholder", "JSON not valid");
+                $("#load-json-input").css({borderColor:"", color: ""});
+                $("#load-json-input").attr("placeholder", "load by JSON");
+                $("#load-json-input").val("");
+            }
+
+        }
+
         if(level.triangles) {
             $.each(level.triangles,function(key,triangle) {
                 var $triangle = $("<div class='triangle'></div>");
@@ -265,7 +313,25 @@ function LevelMaker() {
         $("#level-name").val(level.name);
         
         $(".level").append('<div class="player"></div>');
-        
+
+
+
+        if(directInput) {
+            $("#load-name-input").css({borderColor:"", color: ""});
+            $("#load-name-input").val("");
+            $("#load-name-input").attr("placeholder", "load by name");
+            $("#load-json-input").css({borderColor:"green", color: "green"});
+            $("#load-json-input").attr("placeholder", "load by JSON");
+
+        } else {
+            $("#load-name-input").css({borderColor:"#green", color: "green"});
+            $("#load-name-input").attr("placeholder", "load by name");
+            $("#load-json-input").css({borderColor:"", color: ""});
+            $("#load-json-input").attr("placeholder", "load by JSON");
+            $("#load-json-input").val("");
+        }
+
+
         window.setTimeout(function() {
             setColors();
             updateColorInformation();    
