@@ -5,31 +5,53 @@ Triangula = {
 
 };
 
+$(document).ready(function() {
 
-function setColors() {
-    var color1 = "#" + $("#color1").val();
-    var color2 = "#" + $("#color2").val();
-    var color3 = "#" + $("#color3").val();
-    var color4 = "#" + $("#color4").val();
-    var color5 = "#" + $("#color5").val();
-    $(".level").css("background-color",color3);
-}
-
-function updateColorInformation() {
-    for(var i=1;i<=5;++i) {
-        $("#color-info" + i).css("background-color", "#" + $("#color" + i).val());
+    try {
+        $("#colorpicker1").smallColorPicker({ /* options */ });
+        $("#colorpicker2").smallColorPicker({ /* options */ });
+        $("#colorpicker3").smallColorPicker({ /* options */ });
+        $("#colorpicker4").smallColorPicker({ /* options */ });
+        $("#colorpicker5").smallColorPicker({ /* options */ });
+    } catch (err) {
+        // the browser is not supported
     }
-    $(".triangle").each(function() {
-        $(this).css("background-color",getTriangleColor());
+
+});
+
+
+
+$(".color-btn").on ({
+    scp_ok: function(picker, color) { setTimeout(setColors, 100); }, // color is selected
+    scp_cancel: function(picker, color) {  }, // color selection cancelled
+    scp_show: function(picker) {  }, // picker is shown
+    scp_hide: function(picker) {  } // picker is hidden
+});
+
+
+var setColors = function() {
+
+    var color1 = "#" + $("#color1").css("background-color");
+    var color2 = "#" + $("#color2").css("background-color");
+    var color3 = "#" + $("#color3").css("background-color");
+    var color4 = "#" + $("#color4").css("background-color");
+    var color5 = "#" + $("#color5").css("background-color");
+
+    $(".level").css("background-color", color3);
+
+    $(".triangle").each(function () {
+        $(this).css("background-color", getTriangleColor());
     });
-}
+
+};
+
 
 function getTriangleColor() {
     var base;
     if(Math.random() > 0.5) {
-        base = "#" + $("#color1").val();
+        base = $("#color1").css("background-color");
     } else {
-        base = "#" + $("#color5").val();
+        base = $("#color5").css("background-color");;
     }
     var t = tinycolor(base);
     var hsl = t.toHsl();
@@ -54,7 +76,6 @@ function loadHistory() {
 
 var levelMaker = new LevelMaker();
 setColors();
-updateColorInformation();
 loadHistory();
 
 $(".level").click(function() {
@@ -78,7 +99,6 @@ $("#add-triangle").click(function() {
 });
 
 $(".color-select").keyup(function() {
-    updateColorInformation();
     setColors();
 });
 
@@ -155,7 +175,6 @@ $("#shorten-level").click(function() {
 
 $("#add-spikes").click(function() {
     exitRemoveMode();
-
 });
 
 $("#create-spikes-form").submit(function(e) {

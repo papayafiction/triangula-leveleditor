@@ -1,35 +1,210 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en-US">
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>Triangula. A android jump'n run game</title>
-    <meta name="description" content="Triangula is a difficult, free, open source jump'n run without ads." />
-    <!-- build:css(.tmp) styles/promo.css -->
-    <link href="styles/promo.css" rel="stylesheet" type="text/css" />
+    <title>triangula leveleditor</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="bower_components/colorpicker/css/color-buttons.min.css">
+    <link rel="stylesheet" href="bower_components/colorpicker/css/small-color-picker.min.css">
+    <!-- endbower -->
     <!-- endbuild -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
 </head>
-
 <body>
-    <div id="headerbg"></div>
-    <div id="container">
-    
-        <header>
-            <img src="images/app-icon-2.png"><h1>Triangula</h1>
-            <a id="button" href="https://play.google.com/store/apps/details?id=de.sopamo.triangula.android">Download Triangula</a>
-        </header>
-    
+    <!--[if lt IE 10]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+    <div class="container">
+        <div class="header">
+            <h3 class="text-muted">Triangula Leveleditor</h3>
+        </div>
+        <p>Woot? What is this? Help! Ah, here is <a href="/help.html" target="_blank">help</a>.</p>
+
+        <p>Sorry, but you need to use <strong>Chrome</strong> to build levels. We use some pretty new stuff here and Firefox / IE doesn't support that.</p>
+
+        <div style="margin-bottom: 20px; margin-left: 2px;">
+            <div class="btn-group">
+                <button type="button" id="add-triangle" class="btn btn-default">▲</button>
+                <button type="button" id="add-spikes" data-toggle="modal" data-target="#create-spikes-modal" class="btn btn-default">▲<span>▲</span>▲</button>
+                <button type="button" id="add-door" class="btn btn-default">.❚</button>
+                <button type="button" id="add-bomb" class="btn btn-default">●</button>
+                <button type="button" id="add-exit" class="btn btn-default">ᛦ</button>
+                <button type="button" id="remove-item" class="btn btn-default" style="color:red;"><b>X</b></button>
+            </div>
+            <div class="btn-group">
+                <button type="button" id="save-btn" class="btn btn-success">Save</button>
+                <!--<button type="button" id="load-string-btn" class="btn btn-info">Load String</button>-->
+                <button type="button" id="delete-history" class="btn btn-danger">Delete history</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" id="widen-level" class="btn btn-info">Widen level</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" id="shorten-level" class="btn btn-info">Shorten level</button>
+            </div>
+
+            <div class="btn-group" style="margin-left:15px;">
+                <input type="text" class="form-control" id="load-json-input" placeholder="load by JSON" onkeydown="if (event.keyCode == 13) document.getElementById('load-json').click()">
+            </div>
+            <div class="btn-group">
+                <button type="button" id="load-json" class="btn btn-info">Load</button>
+            </div>
+
+            <div class="btn-group" style="margin-left:15px;">
+                <input type="text" class="form-control" id="load-name-input" placeholder="load by name" onkeydown="if (event.keyCode == 13) document.getElementById('load-name').click()">
+            </div>
+            <div class="btn-group">
+                <button type="button" id="load-name" class="btn btn-info">Load</button>
+            </div>
+
+
+        </div>
+
+        <div class="level-wrapper">
+            <div class="level">
+                <div class="player"></div>
+            </div>
+        </div>
+
+
+        <form class="form-inline" role="form" style="margin-bottom: 20px; margin-top: 20px">
+            <div class="form-group">
+                <div class="color-btn color-btn-left" id="colorpicker1"><b id="color1" style="background-color: #00748E;"></b>Color 1</div>
+            </div>
+            <div class="form-group">
+                <div class="color-btn color-btn-left" id="colorpicker2"><b id="color2" style="background-color: #E3DFBB;"></b>Color 2</div>
+            </div>
+            <div class="form-group">
+                <div class="color-btn color-btn-left" id="colorpicker3"><b id="color3" style="background-color: #F4BA4D;"></b>Color 3</div>
+            </div>
+            <div class="form-group">
+                <div class="color-btn color-btn-left" id="colorpicker4"><b id="color4" style="background-color: #E3753C;"></b>Color 4</div>
+            </div>
+            <div class="form-group">
+                <div class="color-btn color-btn-left" id="colorpicker5"><b id="color5" style="background-color: #DA3B3A;"></b>Color 5</div>
+            </div>
+        </form>
+
+        <p>
+            If you have the beta app you can try some of these levels: movethetime, level4<br>
+            If not, tweet us <a href="https://twitter.com/PapayaFiction" target="_blank">@PapayaFiction</a> to get the beta app.
+        </p>
+
+        <table class="table" id="history-table">
+            <thead>
+                <tr>
+                    <th style="width: 10%">Name</th>
+                    <th style="width: 15%">Gespeichert</th>
+                    <th>String</th>
+                    <th style="width: 10%">String</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>❤ from Papaya Fiction</p>
+        </div>
+
     </div>
-    <div id="content">
-        <p class="masthead">Triangula is a difficult jump'n run. You'll <span class="striked">love</span> <span class="striked">hate</span> play it.</p>
-        <p>Free. No ads. <a href="https://github.com/papayafiction/triangula" target="_blank">Open Source.</a></p>
-        <a href="https://play.google.com/store/apps/details?id=de.sopamo.triangula.android"><img src="images/screenshot_framed.png"></a>
-        <p class="levelinfo">Plus you can <a href="editor.html">build your own levels</a>!</p>
+
+    <div class="modal fade" id="create-spikes-modal" tabindex='-1'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add spikes</h4>
+                </div>
+                <form id="create-spikes-form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="spikes-count">Spikes count</label>
+                            <input type="number" class="form-control" id="spikes-count" min="1" value="1">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Create spikes">
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
-    
-    <footer>
-        <p>Made in 2013 and 2014 by <a href="http://papaya-fiction.com">PapayaFiction</a> - a <a href="http://sopamo.de" target="_blank">Sopamo</a> Production</p>
-    </footer>
+    <!-- /.modal -->
+
+
+    <!-- save: enter password modal -->
+    <div class="modal fade" id="save-modal" tabindex='-1'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Save level</h4>
+                </div>
+                <form id="save-form">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="save-form">Level name:</label>
+                            <input type="text" id="level-name" class="form-control" placeholder="Level name"/> <br/>
+                            <label for="save-form">Creator tag:</label>
+                            <input type="text" class="form-control" id="creator-tag" placeholder="Creator tag"/> <br/>
+                            <label for="save-form">Password:</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Save">
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/jquery-ui/ui/jquery-ui.custom.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/colorpicker/js/small-color-picker.min.js"></script>
+    <script src="scripts/jquery.ui.rotatable.js"></script>
+    <script src="scripts/LevelMaker.js"></script>
+    <script src="scripts/color.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js scripts/plugins.js -->
+    <!-- endbuild -->
+
+    <!-- build:js({app,.tmp}) scripts/main.js -->
+    <script src="scripts/main.js"></script>
+
+    <!-- endbuild -->
+
 
 </body>
 </html>
