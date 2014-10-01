@@ -98,7 +98,6 @@ $("#save-form").submit(function(e) {
     var password = $("#password").val();
     var level_data = levelMaker.getLevelString();
     var level_name = $("#level-name").val();
-
     if(user!="" && password!="" && level_name!="") {
 
         levelMaker.saveLevel();
@@ -107,7 +106,7 @@ $("#save-form").submit(function(e) {
         $("#table-body").append(levelMaker.getHistoryEntryHtml(levelMaker.getLevelJson()));
 
 
-        $.post("save.php", {
+        $.post("http://triangula.papaya-fiction.com/save.php", {
             user: user,
             password: password,
             level_name: level_name,
