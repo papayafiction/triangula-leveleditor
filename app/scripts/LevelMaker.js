@@ -334,7 +334,6 @@ function LevelMaker() {
 
         window.setTimeout(function() {
             setColors();
-            updateColorInformation();    
         },100);
     };
     
