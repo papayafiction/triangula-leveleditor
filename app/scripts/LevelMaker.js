@@ -65,10 +65,10 @@ function LevelMaker() {
         $(".level > .triangle").each(function() {
             if($(this).hasClass("door")) return;
             var angle = $(this).data("angle") ? new Number($(this).data("angle")).toFixed(parseInt(2)) : 0;
-            var rotation = $(this).css("-webkit-transform");
+            var style = $(this).attr("style");
             $(this).css("-webkit-transform","none");
             var position = $(this).position();
-            $(this).css("-webkit-transform", rotation);
+            $(this).attr("style", style);
             json.triangles.push({
                 x: position.left,
                 y: position.top,

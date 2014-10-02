@@ -126,16 +126,6 @@ module.exports = function (grunt) {
             ]
         },
 
-        // Mocha testing framework configuration options
-        mocha: {
-            all: {
-                options: {
-                    run: true,
-                    urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
-                }
-            }
-        },
-
         // Add vendor prefixed styles
         autoprefixer: {
             options: {
@@ -154,7 +144,7 @@ module.exports = function (grunt) {
         // Automatically inject Bower components into the HTML file
         bowerInstall: {
             app: {
-                src: ['<%= config.app %>/index.html'],
+                src: ['<%= config.app %>/editor.html'],
                 ignorePath: '<%= config.app %>/'
             }
         },
@@ -181,7 +171,7 @@ module.exports = function (grunt) {
             options: {
                 dest: '<%= config.dist %>'
             },
-            html: '<%= config.app %>/index.html'
+            html: '<%= config.app %>/*.html'
         },
 
         // Performs rewrites based on rev and the useminPrepare configuration
@@ -236,32 +226,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-
-        // By default, your `index.html`'s <!-- Usemin block --> will take care of
-        // minification. These next options are pre-configured if you do not wish
-        // to use the Usemin blocks.
-        // cssmin: {
-        //     dist: {
-        //         files: {
-        //             '<%= config.dist %>/styles/main.css': [
-        //                 '.tmp/styles/{,*/}*.css',
-        //                 '<%= config.app %>/styles/{,*/}*.css'
-        //             ]
-        //         }
-        //     }
-        // },
-        // uglify: {
-        //     dist: {
-        //         files: {
-        //             '<%= config.dist %>/scripts/scripts.js': [
-        //                 '<%= config.dist %>/scripts/scripts.js'
-        //             ]
-        //         }
-        //     }
-        // },
-        // concat: {
-        //     dist: {}
-        // },
 
         // Copies remaining files to places other tasks can use
         copy: {
