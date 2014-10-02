@@ -244,9 +244,12 @@ function LevelMaker() {
             });
         }
 
-        for(var i = 1;i<=5;++i) {
-            $("#color" + i).val(level.colors[i-1]);
-        }
+        $("#triangleColor1").css("background-color", level.colors[0]);
+        $("#triangleColor2").css("background-color", level.colors[1]);
+        $("#bubbleColor1").css("background-color", level.colors[2]);
+        $("#bubbleColor2").css("background-color", level.colors[3]);
+        $("#backgroundColor").css("background-color", level.colors[4]);
+
 
         $("#level-name").val(level.name);
         
