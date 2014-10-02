@@ -84,18 +84,7 @@ $(".level").click(function() {
 
 $("#add-triangle").click(function() {
     exitRemoveMode();
-    var $triangle = $("<div class='triangle'></div>");
-    $triangle.draggable({snap: ".triangle"}).resizable({
-        aspectRatio: 1
-    }).rotatable();
-
-    $triangle.css("background-color",getTriangleColor());
-    $triangle.appendTo($(".level"));
-
-    $triangle.click(function() {
-        removeItem($triangle);
-    });
-
+    levelMaker.addTriangle();
 });
 
 $(".color-select").keyup(function() {
@@ -179,43 +168,8 @@ $("#add-spikes").click(function() {
 
 $("#create-spikes-form").submit(function(e) {
     e.preventDefault();
-    var triangle = "<div class='triangle'></div>";
-    var amount = parseInt($("#spikes-count").val());
-    var $spikes = $("<div class='spikes'></div>");
-    $spikes.css("width",amount*100);
-    
-    var i = amount;
-    while(i--) {
-        var $triangle = $(triangle);
-        $triangle.css('left',i*100);
-        $spikes.append($triangle);
-    }
-    
-    $(".level").append($spikes);
-    $spikes.draggable().resizable({
-        aspectRatio: amount,
-        grid: [ amount, 1 ]
-    }).rotatable();
-    
-    $spikes.resize(function() {
-        var $triangles = $(this).find(".triangle");
-        var triangle_size = $(this).width() / $triangles.length;
-        $triangles.css({
-            'width': triangle_size,
-            'height': triangle_size
-        });
-        var i = $triangles.length;
-        $triangles.each(function() {
-            --i;
-            $(this).css('left',i*triangle_size);
-        });
-    });
-    
+    levelMaker.addSpike();
     $("#create-spikes-modal").modal("hide");
-
-    $spikes.click(function() {
-        removeItem($spikes);
-    });
 
 });
 
@@ -223,52 +177,18 @@ var doorCount = 0;
 
 $("#add-door").click(function() {
     exitRemoveMode();
-    var $switch = $("<div class='door-switch' id='door-switch-" + doorCount + "'>" + doorCount + "</div>");
-    var $door = $("<div class='triangle door' id='door-" + doorCount + "'>" + doorCount + "</div>");
-    $switch.draggable();
-    $door.draggable().resizable({
-        aspectRatio: 1
-    }).rotatable();
-    $(".level").append($switch);
-    $(".level").append($door);
-    doorCount++;
-
-    $door.click(function() {
-        removeItem($door);
-        Triangula.removeMode=true;
-        removeItem($switch);
-    });
-    $switch.click(function() {
-        removeItem($door);
-        Triangula.removeMode=true;
-        removeItem($switch);
-    });
+    levelMaker.addDoor();
 
 });
 
 $("#add-bomb").click(function() {
     exitRemoveMode();
-    var $bomb = $("<div class='bomb'></div>");
-    $bomb.draggable();
-    $(".level").append($bomb);
-
-    $bomb.click(function() {
-        removeItem($bomb);
-    });
-
-
+    levelMaker.addBomb();
 });
 
 $("#add-exit").click(function() {
     exitRemoveMode();
-    var $exit = $("<div class='exit'></div>");
-    $exit.draggable();
-    $(".level").append($exit);
-
-
-    $exit.click(function() {
-        removeItem($exit);
-    });
+    levelMaker.addExit();
 
 });
 
