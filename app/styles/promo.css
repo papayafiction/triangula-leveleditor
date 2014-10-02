@@ -257,14 +257,6 @@ header a#button:active {
 	height: auto;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 2){
-	#content {
-		margin-top: 53px;
-		width: 470px;
-		height: auto;
-	}
-}
-
 .striked {
     text-decoration: line-through;
 }
