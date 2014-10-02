@@ -260,6 +260,30 @@ kbd {
     top: 0;
 }
 
+#add-bubble {
+    font-size: 31px;
+    height: 34px;
+    line-height: 10px;
+}
+
+.bubble {
+    position: absolute !important;
+    width: 15px;
+    height: 15px;
+    background: red;
+    border-radius: 100px;
+    top: 10px;
+    left: 10px;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.43);
+    -moz-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.43);
+    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.43);
+}
+
+.bubble .ui-icon-gripsmall-diagonal-se {
+    right: -5px;
+    bottom: -5px;
+}
+
 @keyframes bomb {
     0% {
         width: 10px;

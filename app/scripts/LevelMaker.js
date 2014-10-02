@@ -1,7 +1,7 @@
 function LevelMaker() {
 
     /** ## Private ## **/
-    var LEVEL_MAKER_VERSION = 4;
+    var LEVEL_MAKER_VERSION = 5;
     var LOCAL_STORAGE_KEY = "triangula_history";
 
     /** ## Private methods ## **/
@@ -15,6 +15,7 @@ function LevelMaker() {
             doors: [],
             bombs: [],
             exits: [],
+            bubbles: [],
             colors: []
         };
     }
@@ -143,6 +144,17 @@ function LevelMaker() {
             })
         });
 
+        // Add Bubbles
+        $(".bubble").each(function () {
+            var position = $(this).position();
+
+            json.bubbles.push({
+                x: position.left,
+                y: position.top,
+                size: $(this).width()/2
+            });
+        });
+
         json.colors.push($("#triangleColorPicker1").data("current-color"));
         json.colors.push($("#triangleColorPicker2").data("current-color"));
         json.colors.push($("#bubbleColorPicker1").data("current-color"));
@@ -244,6 +256,12 @@ function LevelMaker() {
             });
         }
 
+        if (level.bubbles) {
+            $.each(level.bubbles, function (key, bubble) {
+                levelMaker.addBubble(bubble);
+            });
+        }
+
         
         // Set color picker backgrounds
         $("#triangleColor1").css("background-color", level.colors[0]);
@@ -314,14 +332,12 @@ function LevelMaker() {
 
         if(triangle) {
             $triangle.css({width:triangle.size,height:triangle.size, top: triangle.y, left: triangle.x});
-            $triangle.appendTo($(".level"));
             window.setTimeout(function() {
                 $triangle.css({"-webkit-transform": "rotate(" + (triangle.angle*-1) + "deg)"});
             },10);
-        } else {
-            $triangle.css("background-color",getObjectColor("triangle"));
-            $triangle.appendTo($(".level"));
         }
+        $triangle.css("background-color",getObjectColor("triangle"));
+        $triangle.appendTo($(".level"));
 
         $triangle.click(function() {
             removeItem($triangle);
@@ -383,10 +399,13 @@ function LevelMaker() {
 
     this.addBubble = function(bubble) {
         var $bubble = $("<div class='bubble'></div>");
-        $bubble.draggable();
+        $bubble.draggable().resizable({
+            aspectRatio: 1
+        });
         if (bubble) {
-            $bubble.css({top: bubble.y, left: bubble.x, width: bubble.size, height: bubble.size});
+            $bubble.css({top: bubble.y, left: bubble.x, width: bubble.size*2, height: bubble.size*2});
         }
+        $bubble.css("background-color", getObjectColor("triangle"));
         $bubble.click(function () {
             removeItem($bubble);
         });

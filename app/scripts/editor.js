@@ -239,9 +239,6 @@ $("body").keyup(function (e) {
 
 //add items on key press
 $("body").keypress(function (e) {
-
-
-
     var basePosition = $(".level").position();
     
     var posX = window.x - basePosition.left;
@@ -253,42 +250,36 @@ $("body").keypress(function (e) {
     switch (e.which) {
         case 116: // t for Triangle
             exitRemoveMode();
-            var $triangle = $("<div class='triangle'></div>");
-            $triangle.draggable().resizable({
-                aspectRatio: 1
-            }).rotatable();
-            $triangle.css("background-color", getObjectColor("triangle"));
-            $triangle.css({
-                left: posX,
-                top: posY
-            });
-            $triangle.appendTo($(".level"));
-
-            $triangle.click(function() {
-                removeItem($triangle);
-            });
-
-
+            var triangle = {
+                x: posX,
+                y: posY,
+                width: 100,
+                height: 100,
+                angle: 0
+            };
+            levelMaker.addTriangle(triangle);
             break;
         case 98: // b for Bomb
             exitRemoveMode();
+            var bomb = {
+                x: posX,
+                y: posY
+            };
+            levelMaker.addBomb(bomb);
 
-            var $bomb = $("<div class='bomb'></div>");
-            $bomb.draggable();
-            $bomb.css({
-                left: posX,
-                top: posY
-            });
-            $(".level").append($bomb);
-
-            $bomb.click(function() {
-                removeItem($bomb);
-            });
-
+            break;
+        case 111: // o for Bubble O.o
+            exitRemoveMode();
+            var bubble = {
+                x: posX,
+                y: posY
+            };
+            levelMaker.addBubble(bubble);
             break;
 
         case 100:
             enterRemoveMode();
+            break;
     }
 
 
@@ -322,8 +313,12 @@ function enterRemoveMode() {
         $(this).draggable({disabled:true});
     });
 
-    $(".exit").each(function() {
-        $(this).draggable({disabled:true});
+    $(".exit").each(function () {
+        $(this).draggable({disabled: true});
+    });
+
+    $(".bubble").each(function () {
+        $(this).draggable({disabled: true});
     });
 
 }
@@ -357,6 +352,10 @@ function exitRemoveMode() {
 
     $(".exit").each(function() {
         $(this).draggable({disabled:false});
+    });
+
+    $(".bubble").each(function () {
+        $(this).draggable({disabled: false});
     });
 
 }
