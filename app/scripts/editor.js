@@ -22,7 +22,7 @@ $(document).ready(function() {
 
 
 $(".color-btn").on ({
-    scp_ok: function(picker, color) { setTimeout(setColors, 100); }, // color is selected
+    scp_ok: function(picker, color) { $(picker.target).data("currentColor",color); setTimeout(setColors, 100); }, // color is selected
     scp_cancel: function(picker, color) {  }, // color selection cancelled
     scp_show: function(picker) {  }, // picker is shown
     scp_hide: function(picker) {  } // picker is hidden
@@ -84,6 +84,11 @@ $(".level").click(function() {
 $("#add-triangle").click(function() {
     exitRemoveMode();
     levelMaker.addTriangle();
+});
+
+$("#add-bubble").click(function () {
+    exitRemoveMode();
+    levelMaker.addBubble();
 });
 
 $(".color-select").keyup(function() {
@@ -203,11 +208,6 @@ $("#load-json").click(function() {
 $("#load-name").click(function() {
     levelMaker.loadLevelByName($("#load-name-input").val());
 });
-
-
-
-
-
 
 
 $(document).mousemove(function (e) {

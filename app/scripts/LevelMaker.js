@@ -143,11 +143,11 @@ function LevelMaker() {
             })
         });
 
-        json.colors.push($("#triangleColor1").css("background-color"));
-        json.colors.push($("#triangleColor2").css("background-color"));
-        json.colors.push($("#bubbleColor1").css("background-color"));
-        json.colors.push($("#bubbleColor2").css("background-color"));
-        json.colors.push($("#backgroundColor").css("background-color"));
+        json.colors.push($("#triangleColorPicker1").data("current-color"));
+        json.colors.push($("#triangleColorPicker2").data("current-color"));
+        json.colors.push($("#bubbleColorPicker1").data("current-color"));
+        json.colors.push($("#bubbleColorPicker2").data("current-color"));
+        json.colors.push($("#backgroundColorPicker").data("current-color"));
 
         
         json.name = $("#level-name").val();
@@ -163,7 +163,7 @@ function LevelMaker() {
 
     this.loadLevelByName = function(tag) {
 
-        $.ajax({url:"levels/" + tag + ".txt",
+        $.ajax({url:"http://triangula.papaya-fiction.com/levels/" + tag + ".txt",
             success:function(result){
                 $("#load-name-input").css({borderColor:"green", color: "green"});
                 $("#load-name-input").attr("placeholder", "load by name");
@@ -244,11 +244,19 @@ function LevelMaker() {
             });
         }
 
+        
+        // Set color picker backgrounds
         $("#triangleColor1").css("background-color", level.colors[0]);
         $("#triangleColor2").css("background-color", level.colors[1]);
         $("#bubbleColor1").css("background-color", level.colors[2]);
         $("#bubbleColor2").css("background-color", level.colors[3]);
         $("#backgroundColor").css("background-color", level.colors[4]);
+        // Set color picker data
+        $("#triangleColorPicker1").data("current-color", level.colors[0]);
+        $("#triangleColorPicker2").data("current-color", level.colors[1]);
+        $("#bubbleColorPicker1").data("current-color", level.colors[2]);
+        $("#bubbleColorPicker2").data("current-color", level.colors[3]);
+        $("#backgroundColorPicker").data("current-color", level.colors[4]);
 
 
         $("#level-name").val(level.name);
@@ -293,7 +301,7 @@ function LevelMaker() {
     
     this.getHistoryEntryHtml = function(value) {
         return "<tr><td>" + value.name + "</td><td>" + value.created_at + "</td><td><input type='text' class='form-control level-string-input' readonly value='" + JSON.stringify(value) + "'></td><td><button type='button' class='btn load-level-btn'>Load</button></td></tr>";
-    }
+    };
 
 
 
@@ -318,7 +326,7 @@ function LevelMaker() {
         $triangle.click(function() {
             removeItem($triangle);
         });
-    }
+    };
 
 
     this.addDoor = function (door) {
@@ -358,12 +366,11 @@ function LevelMaker() {
             removeItem($switch);
         });
 
-    }
+    };
 
     this.addBomb = function (bomb) {
         var $bomb = $("<div class='bomb'></div>");
         $bomb.draggable();
-        $(".level").append($bomb);
         if(bomb) {
             $bomb.css({top: bomb.y, left: bomb.x});
         }
@@ -372,8 +379,20 @@ function LevelMaker() {
         });
 
         $(".level").append($bomb);
-    }
+    };
 
+    this.addBubble = function(bubble) {
+        var $bubble = $("<div class='bubble'></div>");
+        $bubble.draggable();
+        if (bubble) {
+            $bubble.css({top: bubble.y, left: bubble.x, width: bubble.size, height: bubble.size});
+        }
+        $bubble.click(function () {
+            removeItem($bubble);
+        });
+
+        $(".level").append($bubble);
+    };
 
     this.addExit = function(exit) {
         var $exit = $("<div class='exit'></div>");
@@ -383,7 +402,7 @@ function LevelMaker() {
             removeItem($exit);
         });
         $(".level").append($exit);
-    }
+    };
 
     this.addSpike = function(spike) {
 
@@ -442,8 +461,7 @@ function LevelMaker() {
         $spikes.click(function() {
             removeItem($spikes);
         });
-
-    }
+    };
 }
 
 LevelMaker.prototype = {
