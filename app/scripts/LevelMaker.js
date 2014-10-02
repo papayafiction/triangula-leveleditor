@@ -142,10 +142,13 @@ function LevelMaker() {
                 y: position.top
             })
         });
-        
-        for(var i = 1;i <= 5;++i) {
-            json.colors.push($("#color" + i).val());
-        }
+
+        json.colors.push($("#triangleColor1").css("background-color"));
+        json.colors.push($("#triangleColor2").css("background-color"));
+        json.colors.push($("#bubbleColor1").css("background-color"));
+        json.colors.push($("#bubbleColor2").css("background-color"));
+        json.colors.push($("#backgroundColor").css("background-color"));
+
         
         json.name = $("#level-name").val();
         
@@ -305,7 +308,7 @@ function LevelMaker() {
                 $triangle.css({"-webkit-transform": "rotate(" + (triangle.angle*-1) + "deg)"});
             },10);
         } else {
-            $triangle.css("background-color",getTriangleColor());
+            $triangle.css("background-color",getObjectColor("triangle"));
             $triangle.appendTo($(".level"));
         }
 
@@ -397,7 +400,7 @@ function LevelMaker() {
         while (i--) {
             var $triangle = $(triangle);
             $triangle.css('left', i * 100);
-            $triangle.css("background-color",getTriangleColor());
+            $triangle.css("background-color",getObjectColor("triangle"));
             $spikes.append($triangle);
         }
 

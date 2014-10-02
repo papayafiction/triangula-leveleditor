@@ -8,11 +8,11 @@ Triangula = {
 $(document).ready(function() {
 
     try {
-        $("#colorpicker1").smallColorPicker({ /* options */ });
-        $("#colorpicker2").smallColorPicker({ /* options */ });
-        $("#colorpicker3").smallColorPicker({ /* options */ });
-        $("#colorpicker4").smallColorPicker({ /* options */ });
-        $("#colorpicker5").smallColorPicker({ /* options */ });
+        $("#triangleColorPicker1").smallColorPicker({ /* options */ });
+        $("#triangleColorPicker2").smallColorPicker({ /* options */ });
+        $("#bubbleColorPicker1").smallColorPicker({ /* options */ });
+        $("#bubbleColorPicker2").smallColorPicker({ /* options */ });
+        $("#backgroundColorPicker").smallColorPicker({ /* options */ });
     } catch (err) {
         // the browser is not supported
     }
@@ -31,27 +31,26 @@ $(".color-btn").on ({
 
 var setColors = function() {
 
-    var color1 = "#" + $("#color1").css("background-color");
-    var color2 = "#" + $("#color2").css("background-color");
-    var color3 = "#" + $("#color3").css("background-color");
-    var color4 = "#" + $("#color4").css("background-color");
-    var color5 = "#" + $("#color5").css("background-color");
-
-    $(".level").css("background-color", color3);
+    var backgroundColor = "#" + $("#backgroundColor").css("background-color");
+    $(".level").css("background-color", backgroundColor);
 
     $(".triangle").each(function () {
-        $(this).css("background-color", getTriangleColor());
+        $(this).css("background-color", getObjectColor("triangle"));
+    });
+
+    $(".bubble").each(function () {
+        $(this).css("background-color", getObjectColor("bubble"));
     });
 
 };
 
 
-function getTriangleColor() {
+function getObjectColor(type) {
     var base;
     if(Math.random() > 0.5) {
-        base = $("#color1").css("background-color");
+        base = $("#"+type+"Color1").css("background-color");
     } else {
-        base = $("#color5").css("background-color");;
+        base = $("#"+type+"Color2").css("background-color");;
     }
     var t = tinycolor(base);
     var hsl = t.toHsl();
@@ -258,7 +257,7 @@ $("body").keypress(function (e) {
             $triangle.draggable().resizable({
                 aspectRatio: 1
             }).rotatable();
-            $triangle.css("background-color", getTriangleColor());
+            $triangle.css("background-color", getObjectColor("triangle"));
             $triangle.css({
                 left: posX,
                 top: posY
