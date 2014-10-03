@@ -1,7 +1,8 @@
 //object to store variables
 Triangula = {
 
-    removeMode:false
+    removeMode:false,
+    addElement: true
 
 };
 
@@ -99,6 +100,7 @@ $("#get-string-btn").click(function() {
 });
 
 $("#save-btn").click(function (e) {
+    Triangula.addElement = false;
     $('#save-modal').modal('show');
 });
 
@@ -111,7 +113,6 @@ $("#save-form").submit(function(e) {
     var level_data = levelMaker.getLevelString();
     var level_name = $("#level-name").val();
     if(user!="" && password!="" && level_name!="") {
-
         levelMaker.saveLevel();
 
         $('#save-modal').modal('hide');
@@ -131,7 +132,6 @@ $("#save-form").submit(function(e) {
             } else {
                 alert('saved on server!')
             }
-
         });
     } else {
         alert("Please fill all fields!");
@@ -139,6 +139,9 @@ $("#save-form").submit(function(e) {
 
 
 });
+$('#save-modal').on('hidden.bs.modal', function (e) {
+    Triangula.addElement = true;
+})
 
 $("#delete-history").click(function() {
     if(confirm("This deletes your whole level history. Are you sure?")) {
@@ -242,42 +245,50 @@ $("body").keypress(function (e) {
     if(posX < 0 || posY < 0) {
         return;
     }
+    if(Triangula.addElement) {
+        switch (e.which) {
+            case
+            116
+            : // t for Triangle
+                exitRemoveMode();
+                var triangle = {
+                    x: posX,
+                    y: posY,
+                    width: 100,
+                    height: 100,
+                    angle: 0
+                };
+                levelMaker.addTriangle(triangle);
+                break;
+            case
+            98
+            : // b for Bomb
+                exitRemoveMode();
+                var bomb = {
+                    x: posX,
+                    y: posY
+                };
+                levelMaker.addBomb(bomb);
 
-    switch (e.which) {
-        case 116: // t for Triangle
-            exitRemoveMode();
-            var triangle = {
-                x: posX,
-                y: posY,
-                width: 100,
-                height: 100,
-                angle: 0
-            };
-            levelMaker.addTriangle(triangle);
-            break;
-        case 98: // b for Bomb
-            exitRemoveMode();
-            var bomb = {
-                x: posX,
-                y: posY
-            };
-            levelMaker.addBomb(bomb);
+                break;
+            case
+            111
+            : // o for Bubble O.o
+                exitRemoveMode();
+                var bubble = {
+                    x: posX,
+                    y: posY
+                };
+                levelMaker.addBubble(bubble);
+                break;
 
-            break;
-        case 111: // o for Bubble O.o
-            exitRemoveMode();
-            var bubble = {
-                x: posX,
-                y: posY
-            };
-            levelMaker.addBubble(bubble);
-            break;
-
-        case 100:
-            enterRemoveMode();
-            break;
+            case
+            100
+            :
+                enterRemoveMode();
+                break;
+        }
     }
-
 
 });
 
