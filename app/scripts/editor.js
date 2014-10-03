@@ -16,7 +16,6 @@ $(document).ready(function() {
     } catch (err) {
         // the browser is not supported
     }
-
 });
 
 
@@ -174,7 +173,6 @@ $("#create-spikes-form").submit(function(e) {
     e.preventDefault();
     levelMaker.addSpike();
     $("#create-spikes-modal").modal("hide");
-
 });
 
 var doorCount = 0;
@@ -193,13 +191,11 @@ $("#add-bomb").click(function() {
 $("#add-exit").click(function() {
     exitRemoveMode();
     levelMaker.addExit();
-
 });
 
 $("#remove-item").click(function() {
     enterRemoveMode();
 });
-
 
 $("#load-json").click(function() {
     levelMaker.loadLevelString($("#load-json-input").val(), true);

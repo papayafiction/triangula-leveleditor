@@ -271,7 +271,7 @@ kbd {
     width: 15px;
     height: 15px;
     background: red;
-    border-radius: 100px;
+    border-radius: 5000px;
     top: 10px;
     left: 10px;
     -webkit-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.43);

@@ -81,10 +81,10 @@ function LevelMaker() {
         // Add Spikes
         $(".spikes").each(function() {
             var angle = $(this).data("angle") ? new Number($(this).data("angle")).toFixed(parseInt(2)) : 0;
-            var rotation = $(this).css("-webkit-transform");
+            var style = $(this).attr("style");
             $(this).css("-webkit-transform", "none");
             var position = $(this).position();
-            $(this).css("-webkit-transform", rotation);
+            $(this).attr("style", style);
             
             var count = $(this).find(".triangle").length;
             
@@ -100,10 +100,10 @@ function LevelMaker() {
         // Add doors
         $(".door").each(function() {
             var angle = $(this).data("angle") ? new Number($(this).data("angle")).toFixed(parseInt(2)) : 0;
-            var rotation = $(this).css("-webkit-transform");
+            var style = $(this).attr("style");
             $(this).css("-webkit-transform", "none");
             var position = $(this).position();
-            $(this).css("-webkit-transform", rotation);
+            $(this).attr("style", style);
 
             var doorid = parseInt($(this).html());
             
@@ -151,15 +151,15 @@ function LevelMaker() {
             json.bubbles.push({
                 x: position.left,
                 y: position.top,
-                size: $(this).width()/2
+                size: $(this).width()
             });
         });
 
-        json.colors.push($("#triangleColorPicker1").data("current-color"));
-        json.colors.push($("#triangleColorPicker2").data("current-color"));
-        json.colors.push($("#bubbleColorPicker1").data("current-color"));
-        json.colors.push($("#bubbleColorPicker2").data("current-color"));
-        json.colors.push($("#backgroundColorPicker").data("current-color"));
+        json.colors.push($("#triangleColorPicker1").data("current-color").substr(1,6));
+        json.colors.push($("#triangleColorPicker2").data("current-color").substr(1, 6));
+        json.colors.push($("#bubbleColorPicker1").data("current-color").substr(1, 6));
+        json.colors.push($("#bubbleColorPicker2").data("current-color").substr(1, 6));
+        json.colors.push($("#backgroundColorPicker").data("current-color").substr(1, 6));
 
         
         json.name = $("#level-name").val();
@@ -264,17 +264,17 @@ function LevelMaker() {
 
         
         // Set color picker backgrounds
-        $("#triangleColor1").css("background-color", level.colors[0]);
-        $("#triangleColor2").css("background-color", level.colors[1]);
-        $("#bubbleColor1").css("background-color", level.colors[2]);
-        $("#bubbleColor2").css("background-color", level.colors[3]);
-        $("#backgroundColor").css("background-color", level.colors[4]);
+        $("#triangleColor1").css("background-color", "#" + level.colors[0]);
+        $("#triangleColor2").css("background-color", "#" + level.colors[1]);
+        $("#bubbleColor1").css("background-color", "#" + level.colors[2]);
+        $("#bubbleColor2").css("background-color", "#" + level.colors[3]);
+        $("#backgroundColor").css("background-color", "#" + level.colors[4]);
         // Set color picker data
-        $("#triangleColorPicker1").data("current-color", level.colors[0]);
-        $("#triangleColorPicker2").data("current-color", level.colors[1]);
-        $("#bubbleColorPicker1").data("current-color", level.colors[2]);
-        $("#bubbleColorPicker2").data("current-color", level.colors[3]);
-        $("#backgroundColorPicker").data("current-color", level.colors[4]);
+        $("#triangleColorPicker1").data("current-color", "#" + level.colors[0]);
+        $("#triangleColorPicker2").data("current-color", "#" + level.colors[1]);
+        $("#bubbleColorPicker1").data("current-color", "#" + level.colors[2]);
+        $("#bubbleColorPicker2").data("current-color", "#" + level.colors[3]);
+        $("#backgroundColorPicker").data("current-color", "#" + level.colors[4]);
 
 
         $("#level-name").val(level.name);
@@ -332,6 +332,7 @@ function LevelMaker() {
 
         if(triangle) {
             $triangle.css({width:triangle.size,height:triangle.size, top: triangle.y, left: triangle.x});
+            $triangle.data("angle",triangle.angle);
             window.setTimeout(function() {
                 $triangle.css({"-webkit-transform": "rotate(" + (triangle.angle*-1) + "deg)"});
             },10);
@@ -356,30 +357,30 @@ function LevelMaker() {
         if(door) {
             $switch.css({top:door.switch.y,left:door.switch.x});
             $door.css({top:door.door.y,left:door.door.x,width: door.door.size, height: door.door.size});
-            $(".level").append($switch);
-            $(".level").append($door);
+            $door.data("angle", door.door.angle);
+            
             window.setTimeout(function () {
                 $door.css({"-webkit-transform": "rotate(" + (door.door.angle * -1) + "deg)"});
             }, 10);
-            ++doorCount;
-
-        } else {
-
-            $(".level").append($switch);
-            $(".level").append($door);
-            doorCount++;
 
         }
+        $(".level").append($switch);
+        $(".level").append($door);
+        ++doorCount;
 
         $door.click(function() {
-            removeItem($door);
-            Triangula.removeMode=true;
-            removeItem($switch);
+            if (Triangula.removeMode) {
+                removeItem($door);
+                Triangula.removeMode = true;
+                removeItem($switch);
+            }
         });
         $switch.click(function() {
-            removeItem($door);
-            Triangula.removeMode=true;
-            removeItem($switch);
+            if (Triangula.removeMode) {
+                removeItem($door);
+                Triangula.removeMode = true;
+                removeItem($switch);
+            }
         });
 
     };
@@ -403,7 +404,7 @@ function LevelMaker() {
             aspectRatio: 1
         });
         if (bubble) {
-            $bubble.css({top: bubble.y, left: bubble.x, width: bubble.size*2, height: bubble.size*2});
+            $bubble.css({top: bubble.y, left: bubble.x, width: bubble.size, height: bubble.size});
         }
         $bubble.css("background-color", getObjectColor("triangle"));
         $bubble.click(function () {
@@ -447,15 +448,14 @@ function LevelMaker() {
 
         if(spike) {
             $spikes.css({height: spike.size, top: spike.y, left: spike.x});
-            $(".level").append($spikes);
+
+            $spikes.data("angle", spike.angle);
             window.setTimeout(function () {
                 $spikes.css({"-webkit-transform": "rotate(" + (spike.angle * -1) + "deg)"});
             }, 10);
 
-        } else {
-            $(".level").append($spikes);
         }
-
+        $(".level").append($spikes);
 
         $spikes.draggable().resizable({
             aspectRatio: amount,
